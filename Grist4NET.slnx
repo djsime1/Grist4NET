@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Grist4NET.Kiota/Grist4NET.Kiota.csproj" />
+  <Project Path="src/Grist4NET/Grist4NET.csproj" />
+</Solution>

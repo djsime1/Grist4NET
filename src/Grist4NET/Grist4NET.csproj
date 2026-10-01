@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<PackageId>Grist4NET</PackageId>
+		<Version>0.1.0</Version>
+		<Title>Grist4NET</Title>
+		<Authors>djsime1</Authors>
+		<Description>
+			Interface with [Grist](https://getgrist.com/) documents.
+		</Description>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<AssemblyTitle>$(Title)</AssemblyTitle>
+		<AssemblyVersion>$(Version)</AssemblyVersion>
+		<FileVersion>$(Version)</FileVersion>
+		<Copyright>$(Authors)</Copyright>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Grist4NET.Kiota\Grist4NET.Kiota.csproj" />
+		<PackageReference Include="Microsoft.Kiota.Abstractions" Version="2.1.0" />
+		<PackageReference Include="Microsoft.Extensions.Options" Version="10.0.11" />
+		<PackageReference Include="Meziantou.Polyfill" Version="1.0.165">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+</Project>

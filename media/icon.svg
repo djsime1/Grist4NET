@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="100%" height="100%" viewBox="0 0 1024 1024" version="1.1" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;" id="svg2" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs id="defs46">
+    <linearGradient id="color-0" bx:pinned="true" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.290315, 0, 0, 1.290315, 142.898084, -161.893461)">
+      <title>Purple</title>
+      <stop style="stop-color: rgb(81, 43, 212);"/>
+    </linearGradient>
+    <linearGradient id="color-3" gradientUnits="userSpaceOnUse" bx:pinned="true">
+      <title>White</title>
+      <stop style="stop-color: rgb(255, 255, 255);"/>
+    </linearGradient>
+    <bx:export>
+      <bx:file format="png" path="icon.png" width="128" height="128" colorspace="srgb" antialiasing="true"/>
+    </bx:export>
+    <style bx:fonts="Open Sans" bx:pinned="true">@import url(https://fonts.googleapis.com/css2?family=Open+Sans%3Aital%2Cwght%400%2C300..800%3B1%2C300..800&amp;display=swap);</style>
+  </defs>
+  <g id="g1" transform="matrix(2.3039904,0,0,2.3039904,-669.40787,-283.51397)">
+    <rect x="290.543" y="123.053" width="444.446" height="444.446" style="display: inline; stroke-linejoin: round; stroke-miterlimit: 1.41421; stroke-dasharray: none; stroke-opacity: 1; stroke: url(&quot;#color-0&quot;); fill: url(&quot;#color-0&quot;); paint-order: fill; stroke-width: 0px; transform-box: fill-box; transform-origin: 50% 50%;" id="rect4" transform="matrix(1, 0, 0, 1, 0.00001526, 0.00000763)"/>
+    <g transform="matrix(2.2207784,0,0,2.2207784,176.539,6.0918981)" id="g10" style="display:inline">
+      <g id="g4348">
+        <g id="g12" transform="matrix(1.22035,0,0,1.18387,65.308,-105.803)">
+          <path id="path14" style="fill: url(&quot;#color-3&quot;);" d="m 142.043,150.384 h -22.092 c -10.194,0 -18.47,8.531 -18.47,19.039 v 18.972 h 22.266 c 10.098,0 18.296,-8.451 18.296,-18.86 z"/>
+        </g>
+        <g id="g16" transform="matrix(-1.22035,0,0,1.18387,299.993,-105.803)">
+          <path id="path18" style="fill: url(&quot;#color-3&quot;);" d="m 142.043,150.384 h -22.092 c -10.194,0 -18.47,8.531 -18.47,19.039 v 18.972 h 22.266 c 10.098,0 18.296,-8.451 18.296,-18.86 z"/>
+        </g>
+        <g id="g20" transform="matrix(-1.22035,0,0,1.18387,237.493,-47.8026)">
+          <path id="path22" style="fill: url(&quot;#color-3&quot;);" d="m 142.043,150.384 h -22.092 c -10.194,0 -18.47,8.531 -18.47,19.039 v 18.972 h 22.266 c 10.098,0 18.296,-8.451 18.296,-18.86 z"/>
+        </g>
+        <g id="g24" transform="matrix(-1.22035,0,0,1.18387,237.493,10.1974)">
+          <path id="path26" style="fill: url(&quot;#color-3&quot;);" d="m 142.043,150.384 h -22.092 c -10.194,0 -18.47,8.531 -18.47,19.039 v 18.972 h 22.266 c 10.098,0 18.296,-8.451 18.296,-18.86 z"/>
+          <text style="fill: url(&quot;#color-0&quot;); font-family: &quot;Open Sans&quot;; font-size: 29.3161px; font-weight: 600; line-height: 46.9057px; text-anchor: middle; white-space: pre;" transform="matrix(-0.819437, 0, 0, 0.844687, 194.610769, -8.613691)" x="88.901" y="222.018">N</text>
+        </g>
+        <g id="g28" transform="matrix(-1.22035,0,0,1.18387,299.993,-47.8026)">
+          <path id="path30" style="fill: url(&quot;#color-3&quot;);" d="m 142.043,150.384 h -22.092 c -10.194,0 -18.47,8.531 -18.47,19.039 v 18.972 h 22.266 c 10.098,0 18.296,-8.451 18.296,-18.86 z"/>
+        </g>
+        <g id="g32" transform="matrix(1.22035,0,0,1.18387,65.308,-47.8026)">
+          <path id="path34" style="fill: url(&quot;#color-3&quot;);" d="m 142.043,150.384 h -22.092 c -10.194,0 -18.47,8.531 -18.47,19.039 v 18.972 h 22.266 c 10.098,0 18.296,-8.451 18.296,-18.86 z"/>
+        </g>
+        <g id="g36" transform="matrix(-1.22035,0,0,1.18387,299.993,10.1974)" style="">
+          <path id="path38" style="fill: url(&quot;#color-3&quot;);" d="m 142.043,150.384 h -22.092 c -10.194,0 -18.47,8.531 -18.47,19.039 v 18.972 h 22.266 c 10.098,0 18.296,-8.451 18.296,-18.86 z"/>
+          <text style="fill: url(&quot;#color-0&quot;); font-family: &quot;Open Sans&quot;; font-size: 29.3161px; font-weight: 600; line-height: 46.9057px; text-anchor: middle; white-space: pre;" transform="matrix(-0.819437, 0, 0, 0.844687, 245.825569, -8.613691)" x="151.401" y="222.018">E</text>
+        </g>
+        <g id="g40" transform="matrix(1.22035,0,0,1.18387,65.308,10.1974)">
+          <path id="path42" style="fill: url(&quot;#color-3&quot;);" d="m 142.043,150.384 h -22.092 c -10.194,0 -18.47,8.531 -18.47,19.039 v 18.972 h 22.266 c 10.098,0 18.296,-8.451 18.296,-18.86 z"/>
+          <text style="fill: url(&quot;#color-0&quot;); font-family: &quot;Open Sans&quot;; font-size: 29.3161px; font-weight: 600; line-height: 46.9057px; text-anchor: middle; white-space: pre;" transform="matrix(0.819437, 0, 0, 0.844687, -53.515546, -8.613691)" x="213.9" y="222.018">T</text>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

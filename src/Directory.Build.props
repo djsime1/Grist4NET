@@ -1,0 +1,25 @@
+<Project>
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.0;netstandard2.1;net8.0;net10.0</TargetFrameworks>
+		<LangVersion>14.0</LangVersion>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<EnableNETAnalyzers>True</EnableNETAnalyzers>
+		<AnalysisLevel>10.0</AnalysisLevel>
+		<AnalysisMode>Minimum</AnalysisMode>
+
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<DebugType>portable</DebugType>
+
+		<PackageProjectUrl>https://codeberg.org/dj1/Grist4NET</PackageProjectUrl>
+		<RepositoryUrl>https://codeberg.org/dj1/Grist4NET</RepositoryUrl>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
+		<PackageIcon>icon.png</PackageIcon>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\media\icon.png" Pack="true" PackagePath="\" />
+	</ItemGroup>
+</Project>

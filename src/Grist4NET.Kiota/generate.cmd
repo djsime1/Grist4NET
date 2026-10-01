@@ -1,0 +1,1 @@
+dotnet kiota generate -l csharp -c GristKiotaClientBase -n Grist4NET.Kiota -d grist.yml -o Client --co --ebc --allowed-external-origins 'frictionlessdata/*.json'
