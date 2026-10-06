@@ -1,0 +1,8 @@
+- name: Guide
+  href: guide/
+- name: Grist4NET API
+  href: api/Grist4NET/index.html
+- name: Grist4NET.Kiota
+  href: api/Grist4NET.Kiota/Grist4NET.Kiota.html
+- name: Project repository
+  href: https://codeberg.org/dj1/Grist4NET

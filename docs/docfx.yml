@@ -1,0 +1,35 @@
+$schema: https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json
+metadata:
+  - src:
+      - src: ../src
+        files:
+          - Grist4NET/Grist4NET.csproj
+    dest: api/Grist4NET
+  - src:
+      - src: ../src
+        files:
+          - Grist4NET.Kiota/Grist4NET.Kiota.csproj
+    dest: api/Grist4NET.Kiota
+build:
+  content:
+    - files:
+        - '**/*.{md,yml}'
+      exclude:
+        - docfx.yml
+  resource:
+    - files:
+        - media/**
+  output: ../_site
+  template:
+    - default
+  globalMetadata:
+    _appName: Grist4NET
+    _appTitle: Grist4NET
+    _appLogoPath: media/icon.svg
+    _appFaviconPath: media/icon.ico
+    _enableSearch: true
+    _disableContribution: false
+    _gitContribute:
+      - repo: https://codeberg.org/dj1/Grist4NET
+        branch: public
+    pdf: false

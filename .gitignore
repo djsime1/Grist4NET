@@ -148,3 +148,11 @@ http-client.private.env.json
 # Project-specific
 src/Grist4NET.Kiota/Client/.kiota.log
 Grist4NET.sln.DotSettings.user
+.wrangler/
+
+# $ just docs
+_site/
+docs/docfx.json
+docs/index.md
+docs/media/
+docs/api/

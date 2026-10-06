@@ -43,6 +43,8 @@ internal static class GristValueConverter
 			&& TryConvertCollection(list, fieldType, out IEnumerable? collection)
 		)
 			return collection;
+		
+		// TODO: Convert using implicit/explicit cast operators
 
 		string message =
 			fieldType.IsEnum

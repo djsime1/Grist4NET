@@ -5,7 +5,7 @@
 		<Title>Grist4NET</Title>
 		<Authors>djsime1</Authors>
 		<Description>
-			Interface with [Grist](https://getgrist.com/) documents.
+			Interface with Grist documents.
 		</Description>
 	</PropertyGroup>
 

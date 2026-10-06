@@ -12,14 +12,16 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<DebugType>portable</DebugType>
 
-		<PackageProjectUrl>https://codeberg.org/dj1/Grist4NET</PackageProjectUrl>
+		<PackageProjectUrl>https://g4n.dj1.dev/</PackageProjectUrl>
 		<RepositoryUrl>https://codeberg.org/dj1/Grist4NET</RepositoryUrl>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
 		<PackageIcon>icon.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<None Include="..\..\media\icon.png" Pack="true" PackagePath="\" />
+		<None Include="README.md" Pack="true" PackagePath="\" />
 	</ItemGroup>
 </Project>
