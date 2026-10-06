@@ -1,6 +1,6 @@
 <img src="media/icon.png" align="left">
 
-# Grist4NET
+# [Grist4NET](https://g4n.dj1.dev)
 
 *A Kiota client and wrapper for the [Grist](https://getgrist.com/) API.*  
 Currently capable of fetching Grist documents and their data, as well as binding said data to class properties.
@@ -14,6 +14,33 @@ wrapper by looking at the samples directory.
 Grist4NET aims to provide an easy-to-use API wrapper for Grist documents. As of now, the scope is limited to only
 reading document properties, tables, and rows. To that extent, records can also be mapped to POCO properties in order to
 provide strongly-typed access to data.
+
+## Installation
+NuGet packages are available on [nuget.org](https://www.nuget.org/packages?q=Grist4NET) and [Codeberg](https://codeberg.org/dj1/Grist4NET/packages):
+
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th colspan="2">Package</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NuGet.org</td>
+<td><a href="https://www.nuget.org/packages/Grist4NET">Grist4NET</a></td>
+<td><a href="https://www.nuget.org/packages/Grist4NET.Kiota">Grist4NET.Kiota</a></td>
+</tr>
+<tr>
+<td>Codeberg</td>
+<td><a href="https://codeberg.org/dj1/-/packages/nuget/grist4net">Grist4NET</a></td>
+<td><a href="https://codeberg.org/dj1/-/packages/nuget/grist4net.kiota">Grist4NET.Kiota</a></td>
+</tr>
+</tbody>
+</table>
+
+`Grist4NET.Kiota` contains the Kiota-generated API client, while `Grist4NET` uses that client to provide easy-to-use
+wrapper types and objects. All wrapper types can be loaded `using Grist4NET;` and have names prefixed with `Grist*`.
 
 ## Quick start
 The basis of interacting with a Grist instance starts with a `GristConnection`. You'll need to set up an
