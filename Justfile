@@ -1,6 +1,5 @@
 media:
 	magick media/icon.svg -resize 128 -colors 8 PNG8:media/icon.png
-	magick media/icon.svg -define icon:auto-resize="128,64,32,16" media/icon.ico
 
 docs *ARGS:
 	mkdir -p docs/media
@@ -12,5 +11,5 @@ docs *ARGS:
 	ln -f media/* docs/media
 	dotnet docfx build docs/docfx.json {{ARGS}}
 
-deploy BRANCH="main": docs
+deploy BRANCH="preview": docs
 	wrangler pages deploy --branch="{{BRANCH}}" _site

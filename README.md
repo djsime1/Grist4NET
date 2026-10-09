@@ -1,14 +1,28 @@
-<img src="media/icon.png" align="left">
+<table>
+<tr>
+<td>
+<img src="media/icon.svg" align="center" width="128">
+</td>
+<td>
 
 # [Grist4NET](https://g4n.dj1.dev)
 
 *A Kiota client and wrapper for the [Grist](https://getgrist.com/) API.*  
 Currently capable of fetching Grist documents and their data, as well as binding said data to class properties.
+</td>
+</tr>
+</table>
 
 > [!IMPORTANT]
-> This side-project is under active development (unless the last commit was over two months ago lmao) and will not have
-a stable API for some time. It's also missing documentation for most members, but you can get the gist of how to use the
+> This side-project is under active development (unless the last commit was over two months ago...) and will not have
+a stable API until a 1.0.0 release is made. It's also missing documentation for most members, but you can get the gist of how to use the
 wrapper by looking at the samples directory.
+
+> [!NOTE]
+> **Grist** is a trademark of *Grist Labs, Inc.*  
+> **Grist4NET** is not affiliated with or endorsed by *Grist Labs, Inc.*
+
+---
 
 ## Front matter
 Grist4NET aims to provide an easy-to-use API wrapper for Grist documents. As of now, the scope is limited to only

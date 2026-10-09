@@ -1,5 +1,5 @@
-- name: Guide
-  href: guide/
+#- name: Guide
+#  href: guide/
 - name: Grist4NET API
   href: api/Grist4NET/index.html
 - name: Grist4NET.Kiota

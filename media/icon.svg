@@ -1,51 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg width="100%" height="100%" viewBox="0 0 1024 1024" version="1.1" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;" id="svg2" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
-  <defs id="defs46">
-    <linearGradient id="color-0" bx:pinned="true" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.290315, 0, 0, 1.290315, 142.898084, -161.893461)">
-      <title>Purple</title>
-      <stop style="stop-color: rgb(81, 43, 212);"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" alt="Grist4NET icon" viewBox="0 0 512 512" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <linearGradient id="color-0" bx:pinned="true" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1, 0, 0, 1, 156.49336, -140.589746)">
+      <title>Background</title>
+      <stop style="stop-color: rgb(97, 54, 231);"/>
     </linearGradient>
-    <linearGradient id="color-3" gradientUnits="userSpaceOnUse" bx:pinned="true">
-      <title>White</title>
+    <linearGradient id="color-1" bx:pinned="true" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.068386, 0, 0, 1.432947, 5855.5129, 886.215799)">
+      <title>Foreground</title>
       <stop style="stop-color: rgb(255, 255, 255);"/>
     </linearGradient>
-    <bx:export>
-      <bx:file format="png" path="icon.png" width="128" height="128" colorspace="srgb" antialiasing="true"/>
-    </bx:export>
-    <style bx:fonts="Open Sans" bx:pinned="true">@import url(https://fonts.googleapis.com/css2?family=Open+Sans%3Aital%2Cwght%400%2C300..800%3B1%2C300..800&amp;display=swap);</style>
   </defs>
-  <g id="g1" transform="matrix(2.3039904,0,0,2.3039904,-669.40787,-283.51397)">
-    <rect x="290.543" y="123.053" width="444.446" height="444.446" style="display: inline; stroke-linejoin: round; stroke-miterlimit: 1.41421; stroke-dasharray: none; stroke-opacity: 1; stroke: url(&quot;#color-0&quot;); fill: url(&quot;#color-0&quot;); paint-order: fill; stroke-width: 0px; transform-box: fill-box; transform-origin: 50% 50%;" id="rect4" transform="matrix(1, 0, 0, 1, 0.00001526, 0.00000763)"/>
-    <g transform="matrix(2.2207784,0,0,2.2207784,176.539,6.0918981)" id="g10" style="display:inline">
-      <g id="g4348">
-        <g id="g12" transform="matrix(1.22035,0,0,1.18387,65.308,-105.803)">
-          <path id="path14" style="fill: url(&quot;#color-3&quot;);" d="m 142.043,150.384 h -22.092 c -10.194,0 -18.47,8.531 -18.47,19.039 v 18.972 h 22.266 c 10.098,0 18.296,-8.451 18.296,-18.86 z"/>
-        </g>
-        <g id="g16" transform="matrix(-1.22035,0,0,1.18387,299.993,-105.803)">
-          <path id="path18" style="fill: url(&quot;#color-3&quot;);" d="m 142.043,150.384 h -22.092 c -10.194,0 -18.47,8.531 -18.47,19.039 v 18.972 h 22.266 c 10.098,0 18.296,-8.451 18.296,-18.86 z"/>
-        </g>
-        <g id="g20" transform="matrix(-1.22035,0,0,1.18387,237.493,-47.8026)">
-          <path id="path22" style="fill: url(&quot;#color-3&quot;);" d="m 142.043,150.384 h -22.092 c -10.194,0 -18.47,8.531 -18.47,19.039 v 18.972 h 22.266 c 10.098,0 18.296,-8.451 18.296,-18.86 z"/>
-        </g>
-        <g id="g24" transform="matrix(-1.22035,0,0,1.18387,237.493,10.1974)">
-          <path id="path26" style="fill: url(&quot;#color-3&quot;);" d="m 142.043,150.384 h -22.092 c -10.194,0 -18.47,8.531 -18.47,19.039 v 18.972 h 22.266 c 10.098,0 18.296,-8.451 18.296,-18.86 z"/>
-          <text style="fill: url(&quot;#color-0&quot;); font-family: &quot;Open Sans&quot;; font-size: 29.3161px; font-weight: 600; line-height: 46.9057px; text-anchor: middle; white-space: pre;" transform="matrix(-0.819437, 0, 0, 0.844687, 194.610769, -8.613691)" x="88.901" y="222.018">N</text>
-        </g>
-        <g id="g28" transform="matrix(-1.22035,0,0,1.18387,299.993,-47.8026)">
-          <path id="path30" style="fill: url(&quot;#color-3&quot;);" d="m 142.043,150.384 h -22.092 c -10.194,0 -18.47,8.531 -18.47,19.039 v 18.972 h 22.266 c 10.098,0 18.296,-8.451 18.296,-18.86 z"/>
-        </g>
-        <g id="g32" transform="matrix(1.22035,0,0,1.18387,65.308,-47.8026)">
-          <path id="path34" style="fill: url(&quot;#color-3&quot;);" d="m 142.043,150.384 h -22.092 c -10.194,0 -18.47,8.531 -18.47,19.039 v 18.972 h 22.266 c 10.098,0 18.296,-8.451 18.296,-18.86 z"/>
-        </g>
-        <g id="g36" transform="matrix(-1.22035,0,0,1.18387,299.993,10.1974)" style="">
-          <path id="path38" style="fill: url(&quot;#color-3&quot;);" d="m 142.043,150.384 h -22.092 c -10.194,0 -18.47,8.531 -18.47,19.039 v 18.972 h 22.266 c 10.098,0 18.296,-8.451 18.296,-18.86 z"/>
-          <text style="fill: url(&quot;#color-0&quot;); font-family: &quot;Open Sans&quot;; font-size: 29.3161px; font-weight: 600; line-height: 46.9057px; text-anchor: middle; white-space: pre;" transform="matrix(-0.819437, 0, 0, 0.844687, 245.825569, -8.613691)" x="151.401" y="222.018">E</text>
-        </g>
-        <g id="g40" transform="matrix(1.22035,0,0,1.18387,65.308,10.1974)">
-          <path id="path42" style="fill: url(&quot;#color-3&quot;);" d="m 142.043,150.384 h -22.092 c -10.194,0 -18.47,8.531 -18.47,19.039 v 18.972 h 22.266 c 10.098,0 18.296,-8.451 18.296,-18.86 z"/>
-          <text style="fill: url(&quot;#color-0&quot;); font-family: &quot;Open Sans&quot;; font-size: 29.3161px; font-weight: 600; line-height: 46.9057px; text-anchor: middle; white-space: pre;" transform="matrix(0.819437, 0, 0, 0.844687, -53.515546, -8.613691)" x="213.9" y="222.018">T</text>
-        </g>
-      </g>
-    </g>
+  <rect width="512" height="512" style="fill: url(&quot;#color-0&quot;);">
+    <title>Background</title>
+  </rect>
+  <g>
+    <title>Grid</title>
+    <rect x="192" y="32" width="128" height="128" style="fill: url(&quot;#color-1&quot;);"/>
+    <rect x="352" y="32" width="128" height="128" style="fill: url(&quot;#color-1&quot;);"/>
+    <rect x="32" y="192" width="128" height="128" style="fill: url(&quot;#color-1&quot;);"/>
+    <rect x="192" y="192" width="128" height="128" style="fill: url(&quot;#color-1&quot;);"/>
+    <rect x="352" y="192" width="128" height="128" style="fill: url(&quot;#color-1&quot;);"/>
+    <rect x="32" y="352" width="128" height="128" style="fill: url(&quot;#color-1&quot;);"/>
+    <rect x="192" y="352" width="128" height="128" style="fill: url(&quot;#color-1&quot;);"/>
+    <rect x="352" y="352" width="128" height="128" style="fill: url(&quot;#color-1&quot;);"/>
   </g>
+  <g transform="matrix(1, 0, 0, 1, -2.458351, 1.783485)" style="visibility: hidden;">
+    <title>Text</title>
+    <text style="fill: url(&quot;#color-0&quot;); font-family: &quot;Open Sans&quot;; font-size: 96px; font-weight: 600; text-anchor: middle; white-space: pre;" transform="matrix(1, 0, 0, 1, 158.95136, -142.372746)"><tspan x="99.507" y="433.78">G</tspan><tspan x="99.507" dy="1em">​</tspan></text>
+    <text style="fill: url(&quot;#color-0&quot;); font-family: &quot;Open Sans&quot;; font-size: 96px; font-weight: 600; text-anchor: middle; white-space: pre;" transform="matrix(1, 0, 0, 1, 318.951364, -142.372746)"><tspan x="99.507" y="433.78">4</tspan><tspan x="99.507" dy="1em">​</tspan></text>
+    <text style="fill: url(&quot;#color-0&quot;); font-family: &quot;Open Sans&quot;; font-size: 96px; font-weight: 600; text-anchor: middle; white-space: pre;" transform="matrix(1, 0, 0, 1, -1.048649, 17.627251)"><tspan x="99.507" y="433.78">N</tspan><tspan x="99.507" dy="1em">​</tspan></text>
+    <text style="fill: url(&quot;#color-0&quot;); font-family: &quot;Open Sans&quot;; font-size: 96px; font-weight: 600; text-anchor: middle; white-space: pre;" transform="matrix(1, 0, 0, 1, 158.951344, 17.627251)"><tspan x="99.507" y="433.78">E</tspan><tspan x="99.507" dy="1em">​</tspan></text>
+    <text style="fill: url(&quot;#color-0&quot;); font-family: &quot;Open Sans&quot;; font-size: 96px; font-weight: 600; text-anchor: middle; white-space: pre;" transform="matrix(1, 0, 0, 1, 318.951364, 17.627251)"><tspan x="99.507" y="433.78">T</tspan><tspan x="99.507" dy="1em">​</tspan></text>
+  </g>
+  <path d="M 258.225 256.018 L 283.443 256.018 L 283.443 290.424 C 279.318 291.768 275.357 292.721 271.56 293.284 C 267.763 293.846 263.662 294.127 259.256 294.127 C 248.881 294.127 240.881 291.057 235.256 284.917 C 229.631 278.776 226.818 270.112 226.818 258.924 C 226.818 247.893 229.99 239.26 236.334 233.026 C 242.678 226.791 251.412 223.674 262.537 223.674 C 269.693 223.674 276.474 225.049 282.881 227.799 L 278.943 237.127 C 273.381 234.565 267.819 233.284 262.256 233.284 C 254.943 233.284 249.162 235.581 244.912 240.174 C 240.662 244.768 238.537 251.049 238.537 259.018 C 238.537 267.393 240.451 273.761 244.279 278.12 C 248.107 282.479 253.615 284.659 260.803 284.659 C 264.428 284.659 268.303 284.206 272.428 283.299 L 272.428 265.627 L 258.225 265.627 L 258.225 256.018 Z M 441.711 278.237 L 432.477 278.237 L 432.477 293.19 L 421.743 293.19 L 421.743 278.237 L 390.43 278.237 L 390.43 269.752 L 421.743 224.471 L 432.477 224.471 L 432.477 269.096 L 441.711 269.096 L 441.711 278.237 Z M 421.743 269.096 L 421.743 251.893 C 421.743 245.768 421.899 240.753 422.211 236.846 L 421.836 236.846 C 420.961 238.909 419.586 241.409 417.711 244.346 L 400.696 269.096 L 421.743 269.096 Z M 124.545 453.19 L 110.811 453.19 L 77.107 398.581 L 76.732 398.581 L 76.967 401.627 C 77.404 407.44 77.623 412.752 77.623 417.565 L 77.623 453.19 L 67.451 453.19 L 67.451 384.659 L 81.045 384.659 L 114.654 438.987 L 114.936 438.987 C 114.873 438.268 114.748 435.651 114.561 431.135 C 114.373 426.62 114.279 423.096 114.279 420.565 L 114.279 384.659 L 124.545 384.659 L 124.545 453.19 Z M 277.022 453.19 L 238.256 453.19 L 238.256 384.659 L 277.022 384.659 L 277.022 394.127 L 249.459 394.127 L 249.459 412.784 L 275.288 412.784 L 275.288 422.159 L 249.459 422.159 L 249.459 443.674 L 277.022 443.674 L 277.022 453.19 Z M 421.552 453.19 L 410.349 453.19 L 410.349 394.268 L 390.193 394.268 L 390.193 384.659 L 441.708 384.659 L 441.708 394.268 L 421.552 394.268 L 421.552 453.19 Z" style="fill: url(&quot;#color-0&quot;); text-wrap-mode: nowrap;"/>
 </svg>
