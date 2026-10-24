@@ -21,7 +21,7 @@ namespace Grist4NET.Kiota.Orgs
         /// <summary>Gets an item from the Grist4NET.Kiota.orgs.item collection</summary>
         /// <param name="position">This can be an integer id, or a string subdomain (e.g. `gristlabs`), or `current` if the org is implied by the domain in the url</param>
         /// <returns>A <see cref="global::Grist4NET.Kiota.Orgs.Item.WithOrgItemRequestBuilder"/></returns>
-        public global::Grist4NET.Kiota.Orgs.Item.WithOrgItemRequestBuilder this[int position]
+        public global::Grist4NET.Kiota.Orgs.Item.WithOrgItemRequestBuilder this[string position]
         {
             get
             {

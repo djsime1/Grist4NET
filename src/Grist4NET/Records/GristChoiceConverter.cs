@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace Grist4NET;
 
 /// <summary>
-/// Translates Grist choice options to Enums
+/// Translates Grist choice options to Enums.
 /// </summary>
 /// <typeparam name="TEnum">Enum type</typeparam>
 /// <seealso cref="GristChoiceAttribute"/>

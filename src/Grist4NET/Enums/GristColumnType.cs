@@ -41,7 +41,7 @@ public enum GristColumnType
 	/// <summary>Attachment</summary>
 	Attachments,
 
-	/// <summary>¯\_(ツ)_/¯</summary>
+	/// <summary>¯\\_(ツ)_/¯</summary>
 	Unknown,
 }
 

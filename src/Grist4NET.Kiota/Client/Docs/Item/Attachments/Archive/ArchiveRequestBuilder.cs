@@ -125,8 +125,10 @@ namespace Grist4NET.Kiota.Docs.Item.Attachments.Archive
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class ArchiveRequestBuilderGetQueryParameters 
         {
+            #pragma warning disable CS1591
             [QueryParameter("format")]
             public global::Grist4NET.Kiota.Docs.Item.Attachments.Archive.GetFormatQueryParameterType? Format { get; set; }
+            #pragma warning restore CS1591
         }
     }
 }

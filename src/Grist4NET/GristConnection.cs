@@ -13,7 +13,7 @@ public class GristConnection
 	internal static readonly Uri DefaultBaseUrl = new("https://docs.getgrist.com/api");
 
 	/// <summary>
-	/// Raw Kiota client for API methods not covered by wrapper types
+	/// Raw Kiota client for API methods not covered by wrapper types.
 	/// </summary>
 	public GristKiotaClient Api { get; }
 	internal readonly string ApiKey;
@@ -31,12 +31,14 @@ public class GristConnection
 
 		ApiKey = apiKey;
 		BaseUrl = baseUrl ?? DefaultBaseUrl;
+
 		ApiKeyAuthenticationProvider authProvider = new(
 			$"Bearer {ApiKey}",
 			"Authorization",
 			ApiKeyAuthenticationProvider.KeyLocation.Header,
 			BaseUrl.Host
 		);
+
 		HttpClientRequestAdapter requestAdapter = new(authProvider)
 		{
 			BaseUrl = BaseUrl.ToString(),
@@ -62,6 +64,9 @@ public class GristConnection
 	public GristConnection(IOptions<GristConnectionOptions> options)
 		: this(options.Value) { }
 
+	/// <summary>
+	/// Fetches a document by its full ID, returns a wrapper object that can be used to access tables.
+	/// </summary>
 	public async Task<GristDocument> GetDocument(string documentId)
 	{
 		await _getDocumentSemaphore.WaitAsync();
@@ -79,13 +84,13 @@ public class GristConnection
 }
 
 /// <summary>
-/// Stores the required options to create a <see cref="GristConnection"/>
+/// Stores the required options to create a <see cref="GristConnection"/>.
 /// </summary>
 public class GristConnectionOptions
 {
 	/// <seealso href="https://support.getgrist.com/rest-api/#api-keys"/>
 	public required string ApiKey { get; init; }
 
-	/// <summary>Defaults to Grist's hosted SAAS if not specified</summary>
+	/// <summary>Defaults to <c>https://docs.getgrist.com/api</c> if not specified</summary>.
 	public Uri? BaseUrl { get; init; }
 }

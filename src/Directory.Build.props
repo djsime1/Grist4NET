@@ -11,6 +11,7 @@
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<DebugType>portable</DebugType>
+		<Deterministic>true</Deterministic>
 
 		<PackageProjectUrl>https://g4n.dj1.dev/</PackageProjectUrl>
 		<RepositoryUrl>https://codeberg.org/dj1/Grist4NET</RepositoryUrl>

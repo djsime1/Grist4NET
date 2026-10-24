@@ -8,7 +8,7 @@ namespace Grist4NET;
 public sealed class GristChoiceAttribute(string choice) : Attribute
 {
 	/// <summary>
-	/// Choice name in Grist
+	/// Choice name in Grist.
 	/// </summary>
 	public string Choice { get; } = choice;
 }

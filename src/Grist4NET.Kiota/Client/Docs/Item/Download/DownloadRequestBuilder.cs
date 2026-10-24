@@ -114,10 +114,14 @@ namespace Grist4NET.Kiota.Docs.Item.Download
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class DownloadRequestBuilderGetQueryParameters 
         {
+            #pragma warning disable CS1591
             [QueryParameter("nohistory")]
             public bool? Nohistory { get; set; }
+            #pragma warning restore CS1591
+            #pragma warning disable CS1591
             [QueryParameter("template")]
             public bool? Template { get; set; }
+            #pragma warning restore CS1591
         }
     }
 }

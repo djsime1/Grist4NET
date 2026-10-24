@@ -1,16 +1,16 @@
 using Grist4NET.Kiota;
 using Grist4NET.Kiota.Models;
+using Microsoft.Kiota.Abstractions;
 
 namespace Grist4NET;
 
 /// <summary>
-/// A Grist document, containing one or more tables.
+/// A Grist document, which contains tables.
 /// </summary>
 /// <seealso cref="GristConnection.GetDocument"/>
 public class GristDocument
 {
 	internal readonly GristKiotaClient Api;
-	public readonly string DocumentId;
 	private readonly Dictionary<int, GristTable> _tableCache = new();
 	private readonly SemaphoreSlim _getTableSemaphore = new(1, 1);
 	private readonly Dictionary<ulong, GristAttachment> _attachmentCache = new();
@@ -27,8 +27,29 @@ public class GristDocument
 		DocumentId = documentId;
 	}
 
-	public string Name { get; internal set; } = null!;
+	/// <summary>
+	/// Full document ID, used in API requests.
+	/// </summary>
+	public string DocumentId { get; }
+
+	/// <summary>
+	/// Truncated document ID, used in front-end URL.
+	/// </summary>
+	public string ShortDocumentId { get; internal set; }
+
+	/// <summary>
+	/// The name assigned to the document, as it appears in the UI.
+	/// </summary>
+	public string Name { get; internal set; }
+
+	/// <summary>
+	/// When this document was initially created.
+	/// </summary>
 	public DateTime CreatedAt { get; internal set; }
+
+	/// <summary>
+	/// When this document was last modified.
+	/// </summary>
 	public DateTime UpdatedAt { get; internal set; }
 
 	/// <seealso cref="GristDocument.GetTable"/>
@@ -42,24 +63,38 @@ public class GristDocument
 	}
 
 	/// <summary>
-	/// Retrieves the document's current structure from Grist and syncs it with this instance
+	/// Retrieves the document's current structure from Grist and syncs it with this instance.
 	/// </summary>
 	public async Task Refresh()
 	{
-		Task<DocWithWorkspace> docRequest = Api.Docs[DocumentId].GetAsync()!;
-		Task<TablesList> tablesRequest = Api.Docs[DocumentId]
-			.Tables.GetAsync(
-			// req => req.QueryParameters.Expand = GetExpandQueryParameterType.Column
-			)!;
+		DocWithWorkspace doc;
+		try
+		{
+			doc = (await Api.Docs[DocumentId].GetAsync())!;
+		}
+		catch (ApiException e)
+		{
+			RequestInformation req = Api.Docs[DocumentId].ToGetRequestInformation();
+			throw new GristApiException("Document metadata", e, req);
+		}
 
-		DocWithWorkspace doc = await docRequest;
-		Name = doc!.Name!;
+		ShortDocumentId = doc.UrlId!;
+		Name = doc.Name!;
 		CreatedAt = (DateTime)doc.AdditionalData["createdAt"];
 		UpdatedAt = (DateTime)doc.AdditionalData["updatedAt"];
 
-		TablesList tables = await tablesRequest;
+		TablesList tables;
+		try
+		{
+			tables = (await Api.Docs[DocumentId].Tables.GetAsync())!;
+		}
+		catch (ApiException e)
+		{
+			RequestInformation req = Api.Docs[DocumentId].Tables.ToGetRequestInformation();
+			throw new GristApiException("Document tables", e, req);
+		}
 
-		if (tables!.Tables!.Count == 0)
+		if (tables.Tables!.Count == 0)
 		{
 			_tableMetadata.Clear();
 			return;
@@ -104,6 +139,9 @@ public class GristDocument
 			}
 	}
 
+	/// <summary>
+	/// Fetches a table by its ID, returns a wrapper object that can read and manipulate data.
+	/// </summary>
 	public async Task<GristTable> GetTable(string tableId)
 	{
 		await _getTableSemaphore.WaitAsync();
@@ -120,6 +158,9 @@ public class GristDocument
 		}
 	}
 
+	/// <summary>
+	/// Fetches the metadata of an attachment by its numeric ID; The returned object can be used to download it.
+	/// </summary>
 	public async Task<GristAttachment> GetAttachment(ulong attachmentRef)
 	{
 		await _getAttachmentSemaphore.WaitAsync();

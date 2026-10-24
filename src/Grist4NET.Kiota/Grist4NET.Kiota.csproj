@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<PackageId>Grist4NET.Kiota</PackageId>
-		<Version>1.0.1</Version>
+		<Version>1.0.2</Version>
 		<Title>Grist4NET.Kiota</Title>
 		<Authors>djsime1</Authors>
 		<Description>
@@ -32,6 +32,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Kiota.Bundle" Version="2.1.0" />
+		<PackageReference Include="Microsoft.Kiota.Bundle" Version="2.1.2" />
 	</ItemGroup>
 </Project>

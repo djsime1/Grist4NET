@@ -232,12 +232,18 @@ namespace Grist4NET.Kiota.Docs.Item.Tables.Item.Columns
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class ColumnsRequestBuilderPutQueryParameters 
         {
+            #pragma warning disable CS1591
             [QueryParameter("noadd")]
             public bool? Noadd { get; set; }
+            #pragma warning restore CS1591
+            #pragma warning disable CS1591
             [QueryParameter("noupdate")]
             public bool? Noupdate { get; set; }
+            #pragma warning restore CS1591
+            #pragma warning disable CS1591
             [QueryParameter("replaceall")]
             public bool? Replaceall { get; set; }
+            #pragma warning restore CS1591
         }
     }
 }

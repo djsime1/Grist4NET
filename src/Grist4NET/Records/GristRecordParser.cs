@@ -3,14 +3,14 @@ using Microsoft.Kiota.Abstractions.Serialization;
 namespace Grist4NET;
 
 /// <summary>
-/// Unwraps and parses typed cells in API responses
+/// Unwraps and parses typed cells in API responses.
 /// </summary>
 public static class GristRecordParser
 {
 	internal const string ATTACHMENT_TABLE_ID = "_grist_Attachments";
 
 	/// <summary>
-	/// Modifies the supplied dict in-place by replacing UntypedArray's with wrapper types
+	/// Modifies the supplied dict in-place by replacing UntypedArray's with wrapper types.
 	/// </summary>
 	/// <param name="fields">Dictionary that will be modified</param>
 	/// <param name="document">For resolving references/attachments</param>
@@ -21,7 +21,7 @@ public static class GristRecordParser
 	}
 
 	/// <summary>
-	/// Parses a single typed cell array
+	/// Parses a single typed cell array.
 	/// </summary>
 	/// <param name="array">The typed cell value</param>
 	/// <param name="document">For resolving references/attachments</param>
@@ -38,7 +38,7 @@ public static class GristRecordParser
 		switch (typeEnum)
 		{
 			case GristCellType.List:
-				return ParseStringList(nodes);
+				return nodes.Count == 0 ? null : ParseStringList(nodes);
 
 			case GristCellType.DateTime:
 				num = (nodes[0] as UntypedInteger)!.GetValue();
@@ -52,11 +52,15 @@ public static class GristRecordParser
 			case GristCellType.Reference:
 				str = (nodes[0] as UntypedString)!.GetValue()!;
 				num = (nodes[1] as UntypedInteger)!.GetValue();
-				return new GristReference { TableId = str, RowId = Convert.ToUInt64(num) };
+				return num == 0
+					? null
+					: new GristReference { TableId = str, RowId = Convert.ToUInt64(num) };
 
 			case GristCellType.ReferenceList:
 				str = (nodes[0] as UntypedString)!.GetValue()!;
 				List<ulong> nums = ParseNumericList((nodes[1] as UntypedArray)!.GetValue());
+				if (nums.Count == 0)
+					return null;
 				return str == ATTACHMENT_TABLE_ID
 					? new GristAttachmentList
 					{

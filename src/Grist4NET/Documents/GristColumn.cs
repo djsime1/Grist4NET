@@ -2,6 +2,8 @@ using Grist4NET.Kiota.Models;
 
 namespace Grist4NET;
 
+// TODO: Add methods to create filters
+
 /// <summary>
 /// Base class for storing a column's properties and metadata.
 /// May also be a <see cref="GristChoiceColumn"/> or <see cref="GristReferenceColumn"/>.
@@ -11,20 +13,20 @@ public class GristColumn
 	internal readonly string? Parameter;
 
 	internal GristColumn(
-		int colRef,
-		string colId,
+		int columnRef,
+		string columnId,
 		string label,
 		bool isFormula,
 		GristColumnType type,
-		string description,
+		string? description,
 		string? parameter = null
 	)
 	{
-		ColRef = colRef;
-		ColId = colId;
+		ColumnRef = columnRef;
+		ColumnId = columnId;
 		Label = label;
 		IsFormula = isFormula;
-		Type = type;
+		ColumnType = type;
 		Description = description;
 		Parameter = parameter;
 	}
@@ -40,13 +42,41 @@ public class GristColumn
 			parameter
 		) { }
 
-	public int ColRef { get; }
-	public string ColId { get; internal set; }
+	/// <summary>
+	/// Internal immutable column identifier used by Grist.
+	/// </summary>
+	public int ColumnRef { get; }
+
+	/// <summary>
+	/// Mutable column identifier.
+	/// </summary>
+	public string ColumnId { get; internal set; }
+
+	/// <summary>
+	/// Display name of the column.
+	/// </summary>
 	public string Label { get; internal set; }
+
+	/// <summary>
+	/// Whether cell values in this column are set by a formula.
+	/// (In other words, this column is read-only if true)
+	/// </summary>
 	public bool IsFormula { get; internal set; }
-	public GristColumnType Type { get; internal set; }
-	public GristColumnTypeCategory TypeCategory => Type.GetCategory();
-	public string Description { get; internal set; }
+
+	/// <summary>
+	/// See <see cref="GristColumnType"/>.
+	/// </summary>
+	public GristColumnType ColumnType { get; internal set; }
+
+	/// <summary>
+	/// See <see cref="GristColumnTypeCategory"/>.
+	/// </summary>
+	public GristColumnTypeCategory ColumnTypeCategory => ColumnType.GetCategory();
+
+	/// <summary>
+	/// Extended description of the column.
+	/// </summary>
+	public string? Description { get; internal set; }
 }
 
 /// <summary>
@@ -57,15 +87,15 @@ public class GristChoiceColumn : GristColumn
 	private readonly List<string> _choiceOptions;
 
 	internal GristChoiceColumn(
-		int colRef,
-		string colId,
+		int columnRef,
+		string columnId,
 		string label,
 		bool isFormula,
 		GristColumnType type,
 		string description,
 		List<string> choices
 	)
-		: base(colRef, colId, label, isFormula, type, description)
+		: base(columnRef, columnId, label, isFormula, type, description)
 	{
 		_choiceOptions = choices;
 	}
@@ -77,7 +107,7 @@ public class GristChoiceColumn : GristColumn
 	}
 
 	/// <summary>
-	/// Valid choices for data in this column, as defined within Grist
+	/// Valid choices for data in this column, as defined within the Grist UI.
 	/// </summary>
 	public IReadOnlyList<string> Choices => _choiceOptions.AsReadOnly();
 }
@@ -88,21 +118,21 @@ public class GristChoiceColumn : GristColumn
 public class GristReferenceColumn : GristColumn
 {
 	internal GristReferenceColumn(
-		int colRef,
-		string colId,
+		int columnRef,
+		string columnId,
 		string label,
 		bool isFormula,
 		GristColumnType type,
 		string description,
 		string refTableId
 	)
-		: base(colRef, colId, label, isFormula, type, description, refTableId) { }
+		: base(columnRef, columnId, label, isFormula, type, description, refTableId) { }
 
 	internal GristReferenceColumn(ColumnsList_columns source)
 		: base(source) { }
 
 	/// <summary>
-	/// Table ID of which column references in this column exist in
+	/// Table ID of which references in this column exist in.
 	/// </summary>
 	public string RefTableId => Parameter!;
 }

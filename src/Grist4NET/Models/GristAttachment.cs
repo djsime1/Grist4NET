@@ -1,5 +1,6 @@
 using Grist4NET.Kiota;
 using Grist4NET.Kiota.Models;
+using Microsoft.Kiota.Abstractions;
 
 namespace Grist4NET;
 
@@ -32,16 +33,47 @@ public sealed class GristAttachment
 	// Attachments are immutable, i think
 	internal async Task Refresh()
 	{
-		AttachmentMetadata metadata = (
-			await Api.Docs[DocumentId].Attachments[AttachmentRef].GetAsync()
-		)!;
+		AttachmentMetadata metadata;
+		try
+		{
+			metadata = (await Api.Docs[DocumentId].Attachments[AttachmentRef].GetAsync())!;
+		}
+		catch (ApiException e)
+		{
+			RequestInformation req = Api.Docs[DocumentId]
+				.Attachments[AttachmentRef]
+				.ToGetRequestInformation();
+			throw new GristApiException("Attachment metadata", e, req);
+		}
+
 		FileName = metadata.FileName!;
 		FileSize = Convert.ToUInt64(metadata.FileSize);
 		TimeUploaded = DateTime.Parse(metadata.TimeUploaded!);
 	}
 
-	public Task<Stream> Fetch() =>
-		Api.Docs[DocumentId].Attachments[AttachmentRef].Download.GetAsync()!;
+	public async Task<Stream> Fetch()
+	{
+		Stream file;
+		try
+		{
+			file = (await Api.Docs[DocumentId].Attachments[AttachmentRef].Download.GetAsync())!;
+		}
+		catch (ApiException e)
+		{
+			RequestInformation req = Api.Docs[DocumentId]
+				.Attachments[AttachmentRef]
+				.Download.ToGetRequestInformation();
+			throw new GristApiException("Attachment download", e, req);
+		}
+
+		return file;
+	}
+
+	public async Task Fetch(Stream copyTo)
+	{
+		using Stream file = await Fetch();
+		await file.CopyToAsync(copyTo);
+	}
 
 #if _
 	private Stream? _cachedFile;

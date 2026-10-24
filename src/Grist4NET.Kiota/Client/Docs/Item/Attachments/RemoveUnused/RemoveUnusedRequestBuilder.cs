@@ -83,8 +83,10 @@ namespace Grist4NET.Kiota.Docs.Item.Attachments.RemoveUnused
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class RemoveUnusedRequestBuilderPostQueryParameters 
         {
+            #pragma warning disable CS1591
             [QueryParameter("expiredOnly")]
             public bool? ExpiredOnly { get; set; }
+            #pragma warning restore CS1591
         }
     }
 }

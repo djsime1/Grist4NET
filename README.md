@@ -19,14 +19,15 @@ a stable API until a 1.0.0 release is made. It's also missing documentation for 
 wrapper by looking at the samples directory.
 
 > [!NOTE]
-> **Grist** is a trademark of *Grist Labs, Inc.*  
-> **Grist4NET** is not affiliated with or endorsed by *Grist Labs, Inc.*
+> Grist is a trademark of Grist Labs, Inc.
+> This project has received permission from Grist Labs Inc. to use the Grist wordmark to identify the Grist4NET API wrapper.
+> Grist4NET is not affiliated with Grist Labs.
 
 ---
 
 ## Front matter
 Grist4NET aims to provide an easy-to-use API wrapper for Grist documents. As of now, the scope is limited to only
-reading document properties, tables, and rows. To that extent, records can also be mapped to POCO properties in order to
+reading document properties, tables, and rows. To that extent, records can also be mapped to POCO/DTO properties in order to
 provide strongly-typed access to data.
 
 ## Installation

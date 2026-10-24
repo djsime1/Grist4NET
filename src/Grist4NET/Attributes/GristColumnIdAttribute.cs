@@ -8,7 +8,7 @@ namespace Grist4NET;
 public sealed class GristColumnIdAttribute(string columnId) : Attribute
 {
 	/// <summary>
-	/// Column ID to map
+	/// Column ID to map.
 	/// </summary>
 	public string ColumnId { get; } = columnId;
 }

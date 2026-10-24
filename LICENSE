@@ -1,3 +1,10 @@
+The code for Grist4NET is provided according to the terms of the BSD 3-Clause License, present below. The sole exception
+to this is the Grist OpenAPI definition file, `src/Grist4NET.Kiota/grist.yml`, which has been derived from code
+copyright Grist Labs Inc. under the Creative Commons Attribution-ShareAlike 4.0 International Public License. The terms
+of that license have been prepended to the subject file.
+
+----------
+
 BSD 3-Clause License
 
 Copyright (c) 2026, djsime1

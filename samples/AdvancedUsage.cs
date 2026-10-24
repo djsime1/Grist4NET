@@ -48,7 +48,7 @@ var ownerTable = await doc.GetTable("Owners");
 Console.WriteLine($"There are a total of {await dogTable.CountRecords()} dogs and {await ownerTable.CountRecords()} owners.");
 Console.WriteLine("Here are owners and their dogs from Brooklyn:");
 
-var dogs = await dogTable.BindRecords<Dog>(new GristRecordFilter<string>("Location") {"Brooklyn"});
+var dogs = await dogTable.BindRecords<Dog>(new GristCellValueFilter<string>("Location") {"Brooklyn"});
 var owners = await ownerTable.BindRecordsWithId<Owner>();
 
 foreach (var (id, owner) in owners)

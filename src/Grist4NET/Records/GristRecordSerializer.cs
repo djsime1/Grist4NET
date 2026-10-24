@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace Grist4NET;
 
@@ -14,7 +16,7 @@ namespace Grist4NET;
  */
 
 /// <summary>
-/// Parses Grist JSON records and binds them to the properties of a POCO.
+/// Parses Grist JSON records and binds them to the properties of a POCO/DTO.
 /// </summary>
 /// <typeparam name="T">Type that properties will be bound to</typeparam>
 /// <seealso cref="GristColumnIdAttribute"/>
@@ -43,13 +45,27 @@ public static class GristRecordSerializer<
 				{
 					Property = p,
 					PropertyType = Nullable.GetUnderlyingType(p.PropertyType) ?? p.PropertyType,
-					IsNullable = Nullable.GetUnderlyingType(p.PropertyType) != null,
+					IsNullable =
+						(
+							p.PropertyType.IsValueType
+							&& Nullable.GetUnderlyingType(p.PropertyType) != null
+						)
+#if NET8_0_OR_GREATER
+						|| p.PropertyType.GetCustomAttribute<NullableAttribute>()?.NullableFlags[0]
+							== 2
+#elif NETSTANDARD2_1_OR_GREATER
+						// Pretty sure this sort of usage isn't intended but whatever
+						|| p.PropertyType.GetCustomAttribute<AllowNullAttribute>() != null
+						|| p.PropertyType.GetCustomAttribute<MaybeNullAttribute>() != null
+#else // .NET Standard 2.0
+						|| !p.PropertyType.IsValueType
+#endif
 				}
 			);
 	}
 
 	/// <summary>
-	/// Tests if a particular table can be deserialized into the properties of a particular type
+	/// Tests if a particular table can be deserialized into the properties of a particular type.
 	/// </summary>
 	/// <param name="table">The columns that will be checked</param>
 	/// <param name="throwOnIncompatible">If true, this method will throw when deserialization would fail</param>
@@ -75,6 +91,12 @@ public static class GristRecordSerializer<
 					$"Can not set value of abstract/interface-typed property {typeof(T).Name}.{binding.Property.Name}"
 				);
 
+			compatible &= propertyType != typeof(GristAttachment);
+			if (throwOnIncompatible && !compatible)
+				throw new InvalidOperationException(
+					$"Use {nameof(GristAttachmentList)} to bind attachment columns instead of {nameof(GristAttachment)}"
+				);
+
 			// TODO: Type compatibility checking
 		}
 
@@ -82,8 +104,8 @@ public static class GristRecordSerializer<
 	}
 
 	/// <summary>
-	/// Attempt to deserialize the fields of a Grist record into a given DTO
-	/// Automatically handles unwrapping, parsing, and conversion
+	/// Attempt to deserialize the fields of a Grist record into a given DTO.
+	/// Automatically handles unwrapping, parsing, and conversion.
 	/// </summary>
 	/// <seealso cref="CanDeserialize"/>
 	public static void Deserialize(IDictionary<string, object?> fields, T instance)
@@ -93,6 +115,9 @@ public static class GristRecordSerializer<
 		foreach ((string key, object? value) in fields)
 		{
 			BindingPoint binding = BindingTargets[key];
+
+			// Early null value check for simple cell types
+			// Handles empty text, choice, and Date(Time) cells
 			if (value is null or "")
 				if (binding.IsNullable)
 					continue;
@@ -108,14 +133,27 @@ public static class GristRecordSerializer<
 				continue;
 			}
 
-			object convertedValue = GristValueConverter.ConvertValue(value, binding.PropertyType);
+			object? convertedValue = GristValueConverter.ConvertValue(value, binding.PropertyType);
 			switch (convertedValue)
 			{
+				// Opportunistic nulling:
+				case ICollection { Count: 0 }
+				or IGristReferenceList { Count: 0 }
+				or GristAttachmentList { Count: 0 } when binding.IsNullable:
+					convertedValue = null;
+					break;
+
 				case IGristReference:
-				case IGristReferenceList:
+				case IGristReferenceList rl when rl.Count != 0:
 					// This only occurs when it's the generic type
 					// TODO: Implement recursive binding for GristReference(List)<>
 					throw new NotImplementedException();
+
+				// Late null value check, handles empty reference cells
+				case null when !binding.IsNullable:
+					throw new InvalidOperationException(
+						$"Got null/empty value in column {key}, but mapped property is not nullable."
+					);
 			}
 			// TODO: Add options for handling un-convertable/null values (Assign null, throw, etc)
 			binding.Property.SetValue(instance, convertedValue);
