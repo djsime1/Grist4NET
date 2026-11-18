@@ -126,7 +126,7 @@ public class GristDocument
 				{
 					TablesList_tables table = refMapping[tableMeta.TableRef];
 					tableMeta.TableId = table.Id!;
-					tableMeta.OnDemand = (bool)table.Fields!.OnDemand!;
+					tableMeta.IsOnDemand = (bool)table.Fields!.OnDemand!;
 					// TODO: Update column metadata
 					_tableMetadata[tableMeta.TableId] = tableMeta;
 				}

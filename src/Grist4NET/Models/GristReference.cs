@@ -33,6 +33,12 @@ public sealed class GristReference<T> : IGristReference
 {
 	internal GristReference() { }
 
+	internal GristReference(GristReference source)
+	{
+		TableId = source.TableId;
+		RowId = source.RowId;
+	}
+
 	public string TableId { get; internal init; }
 	public ulong RowId { get; internal init; }
 	public T Value { get; internal init; }

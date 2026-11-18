@@ -64,6 +64,11 @@ public class GristColumn
 	public bool IsFormula { get; internal set; }
 
 	/// <summary>
+	/// Currently an alias of <see cref="IsFormula"/>.
+	/// </summary>
+	public bool IsReadOnly => IsFormula;
+
+	/// <summary>
 	/// See <see cref="GristColumnType"/>.
 	/// </summary>
 	public GristColumnType ColumnType { get; internal set; }

@@ -7,6 +7,7 @@ namespace Grist4NET;
 internal static class GristValueConverter
 {
 	private static readonly Dictionary<Type, bool> CollectionTypeCache = new();
+	private static readonly Dictionary<Type, bool> ParsableTypeCache = new();
 
 	private static readonly MethodInfo TryParseChoiceIntoMethod =
 		typeof(GristValueConverter).GetMethod(
@@ -22,12 +23,11 @@ internal static class GristValueConverter
 
 	internal static object ConvertValue(object value, Type fieldType)
 	{
+		// TODO: Optimize by caching conversion Func<>
 		switch (value)
 		{
 			case IConvertible when !fieldType.IsEnum:
 				return Convert.ChangeType(value, fieldType);
-			case DateTimeOffset dto when fieldType == typeof(DateTime):
-				return dto.UtcDateTime;
 			case string stringValue when fieldType.IsEnum:
 				return ConvertEnum(stringValue, fieldType);
 			case string stringValue when fieldType == typeof(Uri):
@@ -36,6 +36,12 @@ internal static class GristValueConverter
 			case GristReferenceList when fieldType.IsAssignableTo(typeof(IGristReferenceList)):
 				// Recursive binding handled higher in stack
 				return value;
+			#if NET8_0_OR_GREATER
+			case DateTimeOffset dto when fieldType == typeof(DateTime):
+				return dto.UtcDateTime;
+			case string stringValue when IsParsableType(fieldType) && TryParseParsable(stringValue, fieldType, out object? parsedValue):
+				return parsedValue!;
+			#endif
 		}
 
 		if (
@@ -140,4 +146,35 @@ internal static class GristValueConverter
 				target.Add(ConvertValue<TTarget>(sourceItem!));
 		}
 	}
+	
+#if NET8_0_OR_GREATER
+	private static bool IsParsableType(Type type)
+	{
+		bool isParsable;
+		if (ParsableTypeCache.TryGetValue(type, out isParsable))
+			return isParsable;
+
+		isParsable = type.GetInterfaces()
+			.Where(iftype => iftype.IsConstructedGenericType)
+			.Any(iftype => iftype.GetGenericTypeDefinition() == typeof(IParsable<>));
+
+		ParsableTypeCache[type] = isParsable;
+		return isParsable;
+	}
+	
+	internal static bool TryParseParsable(
+		string sourceString,
+		Type targetType,
+		[MaybeNullWhen(false)] out object? parsedValue
+	)
+	{
+		MethodInfo tryParseMethod = targetType.GetMethod(nameof(IParsable<>.TryParse),
+			BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly) ?? throw new InvalidOperationException($"Couldn't find TryParse method on {targetType}");
+		object[] args = [sourceString, null!, null!];
+		bool parsedResult = (bool)
+			TryParseChoiceIntoMethod.MakeGenericMethod(targetType).Invoke(null, args)!;
+		parsedValue = args[2];
+		return parsedResult;
+	}
+#endif
 }

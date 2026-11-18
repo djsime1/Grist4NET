@@ -4,6 +4,7 @@ using Grist4NET.Kiota;
 using Grist4NET.Kiota.Docs.Item.Sql;
 using Grist4NET.Kiota.Models;
 using Microsoft.Kiota.Abstractions;
+using Microsoft.Kiota.Abstractions.Serialization;
 
 namespace Grist4NET;
 
@@ -13,11 +14,12 @@ namespace Grist4NET;
 /// </summary>
 public class GristTableMetadata
 {
-	internal GristTableMetadata(int tableRef, string tableId, bool onDemand)
+	internal GristTableMetadata(int tableRef, string tableId, bool onDemand, int? summarySourceTable = null)
 	{
 		TableRef = tableRef;
 		TableId = tableId;
-		OnDemand = onDemand;
+		IsOnDemand = onDemand;
+		SummarySourceTableRef = summarySourceTable;
 	}
 
 	internal GristTableMetadata(TablesList_tables source)
@@ -25,10 +27,15 @@ public class GristTableMetadata
 			source.Fields!.TableRef ?? throw new ArgumentNullException(nameof(source)),
 			source.Id ?? throw new ArgumentNullException(nameof(source)),
 			source.Fields!.OnDemand ?? throw new ArgumentNullException(nameof(source))
-		) { }
+		)
+	{
+		decimal summarySourceTable = (decimal)source.Fields!.AdditionalData["summarySourceTable"];
+		if (summarySourceTable != 0)
+			SummarySourceTableRef = Convert.ToInt32(summarySourceTable);
+	}
 
 	internal GristTableMetadata(GristTableMetadata source)
-		: this(source.TableRef, source.TableId, source.OnDemand) { }
+		: this(source.TableRef, source.TableId, source.IsOnDemand, source.SummarySourceTableRef) { }
 
 	/// <summary>
 	/// Internal immutable column identifier used by Grist.
@@ -44,7 +51,19 @@ public class GristTableMetadata
 	/// A deprecated Grist feature, on-demand tables bypass (and therefore, miss out on) most of Grist's data engine.
 	/// For more information, see <see href="https://support.getgrist.com/on-demand-tables/"/>
 	/// </summary>
-	public bool OnDemand { get; internal set; }
+	public bool IsOnDemand { get; internal set; }
+
+	/// <summary>
+	/// Summary tables present grouped or aggregate data from other tables.
+	/// For more information, see <see href="https://support.getgrist.com/summary-tables/"/>
+	/// </summary>
+	/// <seealso cref="SummarySourceTableRef"/>
+	public bool IsSummaryTable => SummarySourceTableRef.HasValue;
+	/// <summary>
+	/// The source table where this summary table gets its data from.
+	/// </summary>
+	/// <seealso cref="IsSummaryTable"/>
+	public int? SummarySourceTableRef { get; }
 }
 
 /// <summary>
@@ -172,58 +191,57 @@ public class GristTable : GristTableMetadata
 
 	// TODO: Add parameter for sort
 
-	public async Task<IDictionary<ulong, IDictionary<string, object?>>> GetRecordsWithId(
+	public Task<GristRecordSet> GetRecords(
 		params GristRecordFilter[] filters
-	) => await GetRecordsWithId(0, filters);
+	) => GetRecords(0, filters);
 
-	public async Task<IDictionary<ulong, IDictionary<string, object?>>> GetRecordsWithId(
-		ulong limit,
+	public Task<GristRecordSet> GetRecords(
+		int limit,
 		params GristRecordFilter[] filters
-	) => await GetRecordsInternal(limit, filters).ToDictionaryAsync();
+	) => GetRecordsInternal(limit, null, filters);
 
-	public async Task<ICollection<IDictionary<string, object?>>> GetRecords(
+	public Task<GristRecordSet> GetRecords(
+		string sort,
 		params GristRecordFilter[] filters
-	) => await GetRecords(0, filters);
+	) => GetRecords(0, sort, filters);
 
-	public async Task<ICollection<IDictionary<string, object?>>> GetRecords(
-		ulong limit,
+	public Task<GristRecordSet> GetRecords(
+		int limit,
+		string sort,
 		params GristRecordFilter[] filters
-	) => (await GetRecordsInternal(limit, filters).ToDictionaryAsync()).Values;
+	) => GetRecordsInternal(limit, sort, filters);
 
-	public async Task<IDictionary<ulong, T>> BindRecordsWithId<
+	public Task<IDictionary<ulong, T>> BindRecords<
 		[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T
 	>(params GristRecordFilter[] filters)
-		where T : new() => await BindRecordsWithId<T>(0, filters);
+	where T : new() => BindRecords<T>(() => new T(), 0, filters);
 
-	public async Task<IDictionary<ulong, T>> BindRecordsWithId<
+	public Task<IDictionary<ulong, T>> BindRecords<
 		[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T
-	>(ulong limit, params GristRecordFilter[] filters)
-		where T : new() => await BindRecordsWithId<T>(() => new T(), 0, filters);
+	>(int limit, params GristRecordFilter[] filters)
+	where T : new() => BindRecords<T>(() => new T(), limit, filters);
 
-	public async Task<IDictionary<ulong, T>> BindRecordsWithId<
+	public Task<IDictionary<ulong, T>> BindRecords<
 		[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T
-	>(Func<T> instantiator, ulong limit, params GristRecordFilter[] filters) =>
-		await BindRecordsInternal(instantiator, GetRecordsInternal(limit, filters));
+		>(Func<T> instantiator, int limit, params GristRecordFilter[] filters) => BindRecordsInternal(instantiator, limit, null, filters);
 
-	public async Task<ICollection<T>> BindRecords<
+	public Task<IDictionary<ulong, T>> BindRecords<
 		[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T
-	>(params GristRecordFilter[] filters)
-		where T : new() => await BindRecords<T>(0, filters);
+	>(string sort, params GristRecordFilter[] filters)
+		where T : new() => BindRecords<T>(() => new T(), 0, sort, filters);
 
-	public async Task<ICollection<T>> BindRecords<
+	public Task<IDictionary<ulong, T>> BindRecords<
 		[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T
-	>(ulong limit, params GristRecordFilter[] filters)
-		where T : new() => await BindRecords<T>(() => new T(), 0, filters);
+	>(int limit, string sort, params GristRecordFilter[] filters)
+		where T : new() => BindRecords<T>(() => new T(), limit, sort, filters);
 
-	public async Task<ICollection<T>> BindRecords<
+	public Task<IDictionary<ulong, T>> BindRecords<
 		[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T
-	>(Func<T> instantiator, ulong limit, params GristRecordFilter[] filters) =>
-		(await BindRecordsInternal(instantiator, GetRecordsInternal(limit, filters))).Values;
+		>(Func<T> instantiator, int limit, string sort, params GristRecordFilter[] filters) => BindRecordsInternal(instantiator, limit, sort, filters);
 
-	private async IAsyncEnumerable<
-		KeyValuePair<ulong, IDictionary<string, object?>>
-	> GetRecordsInternal(ulong limit, GristRecordFilter[] filters)
+	private async Task<GristRecordSet> GetRecordsInternal(int limit, string? sort, GristRecordFilter[] filters)
 	{
+		ArgumentOutOfRangeException.ThrowIfLessThan(limit, 0);
 		Dictionary<string, object> filterDict = new();
 
 		foreach (GristRecordFilter filter in filters)
@@ -240,47 +258,34 @@ public class GristTable : GristTableMetadata
 		{
 			Filter = new() { AdditionalData = filterDict },
 			Limit = limit,
+			Sort = sort,
 			CellFormat = RecordsListParameters_cellFormat.Typed,
 		};
-		RecordsList recordsResp;
+		RequestInformation req = Api.Docs[DocumentId]
+			.Tables[TableId]
+			.Records.List.ToPostRequestInformation(recordsReqBody);
+		GristRecordSet recordsResp;
 		try
 		{
-			recordsResp = (
-				await Api.Docs[DocumentId].Tables[TableId].Records.List.PostAsync(recordsReqBody)
-			)!;
+			recordsResp = (await Api.RequestAdapter.SendAsync(req, CreateRecordSet))!;
 		}
 		catch (ApiException e)
 		{
-			RequestInformation req = Api.Docs[DocumentId]
-				.Tables[TableId]
-				.Records.List.ToPostRequestInformation(recordsReqBody);
 			throw new GristApiException("Records list", e, req);
 		}
 
-		foreach (RecordsList_records record in recordsResp.Records!)
-		{
-			ulong id = Convert.ToUInt64(record.Id);
-			IDictionary<string, object?> value = record.Fields!.AdditionalData;
-			GristRecordParser.UnwrapFields(value, Document);
-			yield return new KeyValuePair<ulong, IDictionary<string, object?>>(id, value);
-		}
+		return recordsResp;
 	}
 
-	private async Task<IDictionary<ulong, T>> BindRecordsInternal<T>(
-		Func<T> instantiator,
-		IAsyncEnumerable<KeyValuePair<ulong, IDictionary<string, object?>>> records
-	)
+	private async Task<IDictionary<ulong, T>> BindRecordsInternal<T>(Func<T> instantiator, int limit, string? sort, GristRecordFilter[] filters)
 	{
 		GristRecordSerializer<T>.CanDeserialize(this, true);
-		Dictionary<ulong, T> data = new();
-
-		await foreach (KeyValuePair<ulong, IDictionary<string, object?>> record in records)
-		{
-			T value = instantiator.Invoke();
-			GristRecordSerializer<T>.Deserialize(record.Value, value);
-			data.Add(record.Key, value);
-		}
-
-		return data;
+		GristRecordSet data = await GetRecordsInternal(limit, sort, filters);
+		if (!GristRecordSerializer<T>.HasSubBinders)
+			return GristRecordSerializer<T>.DeserializeRecords(data, instantiator);
+		throw new NotImplementedException();
 	}
+
+	internal GristRecordSet CreateRecordSet(IParseNode node) => new(this);
+	public GristRecordSet CreateRecordSet() => new(this);
 }

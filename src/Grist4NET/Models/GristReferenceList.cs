@@ -1,3 +1,5 @@
+using System.Collections;
+
 namespace Grist4NET;
 
 internal interface IGristReferenceList
@@ -21,7 +23,7 @@ internal interface IGristReferenceList
 /// <summary>
 /// A series of pointers returned for cells in a reference list column.
 /// </summary>
-public sealed class GristReferenceList : IGristReferenceList
+public sealed class GristReferenceList : IGristReferenceList, IReadOnlyList<ulong>
 {
 	internal GristReferenceList() { }
 
@@ -33,17 +35,36 @@ public sealed class GristReferenceList : IGristReferenceList
 
 	/// <inheritdoc />
 	public int Count => RowIds.Count;
+
+	public IEnumerator<ulong> GetEnumerator() => RowIds.GetEnumerator();
+
+	IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+	public ulong this[int index] => RowIds[index];
 }
 
 #if DEBUG
-public sealed class GristReferenceList<T> : IGristReferenceList
+public sealed class GristReferenceList<T> : IGristReferenceList, IReadOnlyList<KeyValuePair<ulong, T>>
 	where T : new()
 {
 	internal GristReferenceList() { }
+
+	internal GristReferenceList(GristReferenceList source)
+	{
+		TableId = source.TableId;
+		RowIds = source.RowIds;
+	}
 
 	public string TableId { get; internal init; }
 	public IReadOnlyList<ulong> RowIds { get; internal init; }
 	public int Count => RowIds.Count;
 	public IReadOnlyList<T> Values { get; internal init; }
+
+	public IEnumerator<KeyValuePair<ulong, T>> GetEnumerator() => Enumerable.Range(0, Count)
+		.Select(i => new KeyValuePair<ulong, T>(RowIds[i], Values[i])).GetEnumerator();
+
+	IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+	public KeyValuePair<ulong, T> this[int i] => new(RowIds[i], Values[i]);
 }
 #endif

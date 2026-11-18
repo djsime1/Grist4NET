@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<PackageId>Grist4NET</PackageId>
-		<Version>0.2.0</Version>
+		<Version>0.3.0</Version>
 		<Title>Grist4NET</Title>
 		<Authors>djsime1</Authors>
 		<Description>

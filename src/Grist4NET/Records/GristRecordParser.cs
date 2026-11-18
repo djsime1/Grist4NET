@@ -16,8 +16,25 @@ public static class GristRecordParser
 	/// <param name="document">For resolving references/attachments</param>
 	public static void UnwrapFields(IDictionary<string, object?> fields, GristDocument document)
 	{
-		foreach ((string key, object? value) in fields.Where(field => field.Value is UntypedArray))
-			fields[key] = UnwrapValue((value as UntypedArray)!, document);
+		foreach ((string key, object? value) in fields.Where(field => field.Value is UntypedNode))
+			fields[key] = UnwrapValue((value as UntypedNode)!, document);
+	}
+
+	public static object? UnwrapValue(UntypedNode node, GristDocument document)
+	{
+		return node switch
+		{
+			UntypedArray untypedArray => UnwrapArray(untypedArray, document),
+			UntypedBoolean untypedBoolean => untypedBoolean.GetValue(),
+			UntypedDecimal untypedDecimal => untypedDecimal.GetValue(),
+			UntypedDouble untypedDouble => untypedDouble.GetValue(),
+			UntypedFloat untypedFloat => untypedFloat.GetValue(),
+			UntypedInteger untypedInteger => untypedInteger.GetValue(),
+			UntypedLong untypedLong => untypedLong.GetValue(),
+			UntypedNull untypedNull => untypedNull.GetValue(),
+			UntypedString untypedString => untypedString.GetValue(),
+			_ => throw new InvalidOperationException($"Unexpected node {node.GetType()}")
+		};
 	}
 
 	/// <summary>
@@ -25,7 +42,7 @@ public static class GristRecordParser
 	/// </summary>
 	/// <param name="array">The typed cell value</param>
 	/// <param name="document">For resolving references/attachments</param>
-	public static object? UnwrapValue(UntypedArray array, GristDocument document)
+	public static object? UnwrapArray(UntypedArray array, GristDocument document)
 	{
 		List<UntypedNode> nodes = array.GetValue().ToList();
 		string typeCode = (nodes[0] as UntypedString)!.GetValue()!;
