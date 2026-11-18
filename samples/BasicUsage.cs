@@ -19,7 +19,7 @@ const string API_KEY = "";
 if (string.IsNullOrEmpty(API_KEY))
 {
 	Console.ForegroundColor = ConsoleColor.Red;
-	Console.WriteLine("Grist API key must be set as a code constant.");
+	Console.WriteLine("Grist API key must be set in the \"API_KEY\" code constant.");
 	return 1;
 }
 
@@ -36,11 +36,11 @@ Console.WriteLine($"There are a total of {await dogTable.CountRecords()} dogs an
 Console.WriteLine("Here are all owners and their dogs:");
 
 var dogs = await dogTable.GetRecords();
-var owners = await ownerTable.GetRecordsWithId();
+var owners = await ownerTable.GetRecords();
 
-foreach (var (id, owner) in owners)
+foreach (var owner in owners)
 {
-	var ownedDogs = dogs.Where(dog => ((GristReference)dog["Owner"]).RowId == id).ToList();
+	var ownedDogs = dogs.Where(dog => ((GristReference)dog["Owner"]).RowId == owner.RowId).ToList();
 	Console.WriteLine($"{owner["Name"]} has {ownedDogs.Count} dogs and can be reached at {owner["Phone"]} or {owner["Email"]}");
 	Console.WriteLine(string.Join("\n",ownedDogs.Select(dog => $"- A {dog["Size"]} {dog["Age"]}-old {dog["Breed"]} named {dog["Puppy_Name"]}.")));
 }

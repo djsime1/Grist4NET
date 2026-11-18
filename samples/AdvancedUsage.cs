@@ -49,11 +49,11 @@ Console.WriteLine($"There are a total of {await dogTable.CountRecords()} dogs an
 Console.WriteLine("Here are owners and their dogs from Brooklyn:");
 
 var dogs = await dogTable.BindRecords<Dog>(new GristCellValueFilter<string>("Location") {"Brooklyn"});
-var owners = await ownerTable.BindRecordsWithId<Owner>();
+var owners = await ownerTable.BindRecords<Owner>();
 
 foreach (var (id, owner) in owners)
 {
-	var ownedDogs = dogs.Where(dog => dog.Owner.RowId == id).ToList();
+	var ownedDogs = dogs.Values.Where(dog => dog.Owner.RowId == id).ToList();
 	if (ownedDogs.Count == 0)
 		continue;
 	Console.WriteLine($"{owner.Name} has {ownedDogs.Count} dogs and can be reached at {owner.Phone} or {owner.Email}");
